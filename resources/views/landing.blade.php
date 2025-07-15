@@ -38,7 +38,7 @@
             class="mt-6 inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg px-7 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
             ❤️ Donasi Sekarang
           </a>
-        </div>
+      </div>
       </div>
       <div class="relative w-full md:w-1/2 h-[400px] md:h-full overflow-hidden rounded-r-2xl">
         <img src="{{ asset('images/berbagi beras.jpg') }}" alt="Taman Zakat"
