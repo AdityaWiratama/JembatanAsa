@@ -275,177 +275,76 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="invoice-container" id="invoice-content">
-            <h1 class="invoice-title">Invoice Donasi</h1>
-            
-            <!-- Invoice Header -->
-            <div class="invoice-header">
-                <div class="invoice-info">Website: Jembatan Asa</div>
-                <div class="invoice-info">Nomor Invoice: <span id="invoiceNumber">INV/2025/0715/001</span></div>
-                <div class="invoice-info">Tanggal: <span id="invoiceDate">15 Juli 2025</span></div>
-            </div>
+    <h1 class="invoice-title">Invoice Donasi</h1>
 
-            <!-- Donor Information -->
-            <div class="section-title">Informasi Donatur</div>
-            <div class="donor-info">Nama Lengkap : <span id="donorName">[Nama Donatur]</span></div>
-            <div class="donor-info">Email/No. WA : <span id="donorContact">[Email/No. WA Donatur]</span></div>
-
-            <!-- Donation Details -->
-            <div class="section-title">Detail Donasi :</div>
-            <table class="donation-table">
-                <thead>
-                    <tr>
-                        <th>Keterangan</th>
-                        <th>Rincian</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Nominal Donasi</td>
-                        <td id="donationAmount">Rp[Nominal]</td>
-                    </tr>
-                    <tr>
-                        <td>Metode Pembayaran</td>
-                        <td id="paymentMethod">[Transfer Bank / E-Wallet / dll]</td>
-                    </tr>
-                    <tr>
-                        <td>Catatan Tambahan</td>
-                        <td id="additionalNotes">[Jika Ada]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Total Pembayaran</strong></td>
-                        <td><strong id="totalPayment">Rp[Nominal]</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Notes -->
-            <div class="section-title">Catatan :</div>
-            <ul class="notes-list">
-                <li>Terima kasih atas donasi Anda. Donasi ini akan digunakan untuk kegiatan kemanusiaan sesuai dengan misi kami.</li>
-                <li>Jika Anda membutuhkan bantuan lebih lanjut, silakan hubungi kami melalui kontak resmi di website ini.</li>
-            </ul>
-
-            <!-- Buttons -->
-            <div class="button-container">
-                <button class="btn btn-back" onclick="goBack()">Kembali</button>
-                <button class="btn btn-print" onclick="downloadPDF()">
-                    <span class="print-icon"></span>
-                    Print
-                </button>
-            </div>
+    <!-- Invoice Header -->
+    <div class="invoice-header">
+        <div class="invoice-info">Website: Jembatan Asa</div>
+        <div class="invoice-info">Nomor Invoice: 
+            <span id="invoiceNumber">INV/{{ now()->format('Y') }}/{{ now()->format('md') }}/{{ $donasi->id }}</span>
         </div>
+        <div class="invoice-info">Tanggal: 
+            <span id="invoiceDate">{{ \Carbon\Carbon::parse($donasi->created_at)->translatedFormat('d F Y') }}</span>
+        </div>
+    </div>
+
+    <!-- Donor Information -->
+    <div class="section-title">Informasi Donatur</div>
+    <div class="donor-info">Nama Lengkap : <span id="donorName">{{ $donasi->nama_lengkap }}</span></div>
+    <div class="donor-info">Email/No. WA : <span id="donorContact">{{ $donasi->kontak }}</span></div>
+    <div class="donor-info">Program Donasi : <span>{{ $donasi->program->nama_program ?? '-' }}</span></div>
+
+    <!-- Donation Details -->
+    <div class="section-title">Detail Donasi :</div>
+    <table class="donation-table">
+        <thead>
+            <tr>
+                <th>Keterangan</th>
+                <th>Rincian</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nominal Donasi</td>
+                <td id="donationAmount">Rp{{ number_format($donasi->nominal, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td>Metode Pembayaran</td>
+                <td id="paymentMethod">{{ ucfirst($donasi->metode_pembayaran) }}</td>
+            </tr>
+            <tr>
+                <td>Catatan Tambahan</td>
+                <td id="additionalNotes">{{ $donasi->catatan_tambahan ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total Pembayaran</strong></td>
+                <td><strong id="totalPayment">Rp{{ number_format($donasi->nominal, 0, ',', '.') }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Notes -->
+    <div class="section-title">Catatan :</div>
+    <ul class="notes-list">
+        <li>Terima kasih atas donasi Anda. Donasi ini akan digunakan untuk kegiatan kemanusiaan sesuai dengan misi kami.</li>
+        <li>Jika Anda membutuhkan bantuan lebih lanjut, silakan hubungi kami melalui kontak resmi di website ini.</li>
+    </ul>
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <a href="{{ route('/') }}" class="btn btn-back">Kembali</a>
+        <button class="btn btn-print" onclick="downloadPDF()">
+            <span class="print-icon"></span>
+            Print
+        </button>
+    </div>
+</div>
     </main>
 
     <script>
-        // Sample data - in real application, this would come from form submission or URL parameters
-        const sampleData = {
-            donorName: "Ahmad Budi Santoso",
-            donorContact: "ahmad.budi@email.com / 081234567890",
-            donationAmount: "Rp 500.000",
-            paymentMethod: "Transfer Bank BCA",
-            additionalNotes: "Semoga bermanfaat untuk saudara-saudara yang membutuhkan",
-            totalPayment: "Rp 500.000"
-        };
-
-        // Function to populate invoice with data
-        function populateInvoice(data) {
-            document.getElementById('donorName').textContent = data.donorName;
-            document.getElementById('donorContact').textContent = data.donorContact;
-            document.getElementById('donationAmount').textContent = data.donationAmount;
-            document.getElementById('paymentMethod').textContent = data.paymentMethod;
-            document.getElementById('additionalNotes').textContent = data.additionalNotes;
-            document.getElementById('totalPayment').textContent = data.totalPayment;
-        }
-
-        // Function to generate invoice number and date
-        function generateInvoiceInfo() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const random = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
-            
-            const invoiceNumber = `INV/${year}/${month}${day}/${random}`;
-            const invoiceDate = now.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
-            
-            document.getElementById('invoiceNumber').textContent = invoiceNumber;
-            document.getElementById('invoiceDate').textContent = invoiceDate;
-        }
-
-        // Function to download PDF
-        function downloadPDF() {
-            const element = document.getElementById('invoice-content');
-            const opt = {
-                margin: 1,
-                filename: `Invoice-Donasi-${document.getElementById('invoiceNumber').textContent.replace(/\//g, '-')}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-
-            // Hide buttons before generating PDF
-            const buttons = document.querySelector('.button-container');
-            buttons.style.display = 'none';
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Show buttons again after PDF generation
-                buttons.style.display = 'flex';
-            });
-        }
-
-        // Function to go back
-        function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // If no history, redirect to main page
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Function to get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            const results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Generate invoice info
-            generateInvoiceInfo();
-            
-            // Try to get data from URL parameters first
-            const urlData = {
-                donorName: getUrlParameter('name') || sampleData.donorName,
-                donorContact: getUrlParameter('contact') || sampleData.donorContact,
-                donationAmount: getUrlParameter('amount') || sampleData.donationAmount,
-                paymentMethod: getUrlParameter('payment') || sampleData.paymentMethod,
-                additionalNotes: getUrlParameter('notes') || sampleData.additionalNotes,
-                totalPayment: getUrlParameter('total') || sampleData.totalPayment
-            };
-            
-            // Populate invoice with data
-            populateInvoice(urlData);
-        });
-
-        // Print functionality for browsers that support it
-        function printInvoice() {
-            window.print();
-        }
-
-        // Add keyboard shortcut for printing (Ctrl+P)
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'p') {
-                e.preventDefault();
-                downloadPDF();
-            }
-        });
-    </script>
+    function downloadPDF() {
+        window.print();
+    }
+</script>
 </body>
 </html>

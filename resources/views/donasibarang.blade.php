@@ -340,106 +340,77 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="form-container">
-            <h1 class="form-title">Formulir Donasi Barang</h1>
-            <p class="form-subtitle">Silahkan isi semua informasi yang diperlukan dengan akurat</p>
-            
-            <form id="donationForm" onsubmit="handleSubmit(event)">
-                <!-- Nama Lengkap -->
-                <div class="form-group">
-                    <label for="fullName" class="form-label">Nama Lengkap <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="fullName" 
-                        name="fullName" 
-                        class="form-input" 
-                        placeholder="Masukkan Nama Lengkap"
-                        required
-                    >
-                </div>
+        <h1 class="form-title">Formulir Donasi Barang</h1>
+        <p class="form-subtitle">Silahkan isi semua informasi yang diperlukan dengan akurat</p>
 
-                <!-- Email/No. WA -->
-                <div class="form-group">
-                    <label for="contact" class="form-label">Email/No. WA <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="contact" 
-                        name="contact" 
-                        class="form-input" 
-                        placeholder="Masukkan Email/No. WA"
-                        required
-                    >
-                </div>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                <!-- Donasi Kemana -->
-                <div class="form-group">
-                    <label for="donationTarget" class="form-label">Donasi Kemana <span class="required">*</span></label>
-                    <select id="donationTarget" name="donationTarget" class="dropdown" required>
-                        <option value="">Pilih Program Donasi</option>
-                        <option value="bencana">Donasi Posko Hangat untuk Terdampak Bencana</option>
-                        <option value="makanan-gorontalo">9.000 Paket Makanan untuk Korban Banjir Gorontalo</option>
-                        <option value="anak-gaza">Anak-Anak Membutuhkan Bantuan Anda</option>
-                        <option value="siap-siaga">Indonesia Siap Siaga (Persiapan Bencana Alam)</option>
-                        <option value="pendidikan-yatim">Bantuan Pendidikan Anak Yatim</option>
-                        <option value="wakaf-masjid">Wakaf Pembangunan Masjid</option>
-                        <option value="kesehatan">Program Kesehatan dan Pengobatan</option>
-                        <option value="makanan-harian">Sedekah Makanan Harian</option>
-                    </select>
-                </div>
+        <form id="donationForm" method="POST" action="{{ route('donasi.barang.store') }}">
+            @csrf
 
-                <!-- Jenis Donasi -->
-                <div class="form-group">
-                    <label for="donationType" class="form-label">Jenis Donasi <span class="required">*</span></label>
-                    <select id="donationType" name="donationType" class="dropdown" required onchange="toggleOtherField()">
-                        <option value="">Pilih Jenis Donasi</option>
-                        <option value="sembako">Sembako</option>
-                        <option value="pakaian-layak-pakai">Pakaian Layak Pakai</option>
-                        <option value="perlengkapan-bayi">Perlengkapan Bayi</option>
-                        <option value="alat-sekolah">Alat Sekolah</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
-                </div>
+            <!-- Nama Lengkap -->
+            <div class="form-group">
+                <label for="fullName" class="form-label">Nama Lengkap <span class="required">*</span></label>
+                <input type="text" id="fullName" name="nama_lengkap" class="form-input" placeholder="Masukkan Nama Lengkap" required>
+            </div>
 
-                <!-- Barang Lainnya (Hidden by default) -->
-                <div class="form-group hidden" id="otherItemGroup">
-                    <label for="otherItem" class="form-label">Barang Lainnya <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="otherItem" 
-                        name="otherItem" 
-                        class="form-input" 
-                        placeholder="Sebutkan barang lainnya"
-                    >
-                </div>
+            <!-- Email/No. WA -->
+            <div class="form-group">
+                <label for="contact" class="form-label">Email/No. WA <span class="required">*</span></label>
+                <input type="text" id="contact" name="kontak" class="form-input" placeholder="Masukkan Email/No. WA" required>
+            </div>
 
-                <!-- Deskripsi Barang -->
-                <div class="form-group">
-                    <label for="itemDescription" class="form-label">Deskripsi Barang <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="itemDescription" 
-                        name="itemDescription" 
-                        class="form-input" 
-                        placeholder="Masukkan Jenis Barang"
-                        required
-                    >
-                </div>
+            <!-- Donasi Kemana -->
+            <div class="form-group">
+                <label for="donationTarget" class="form-label">Donasi Kemana <span class="required">*</span></label>
+                <select id="donationTarget" name="program_donasi_id" class="dropdown" required>
+                    <option value="">Pilih Program Donasi</option>
+                    @foreach ($programs as $program)
+                        <option value="{{ $program->id }}"
+                            {{ isset($selectedProgramId) && $selectedProgramId == $program->id ? 'selected' : '' }}>
+                            {{ $program->nama_program }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-                <!-- Catatan Tambahan -->
-                <div class="form-group">
-                    <label for="notes" class="form-label">Catatan Tambahan <span class="required">*</span></label>
-                    <textarea 
-                        id="notes" 
-                        name="notes" 
-                        class="form-textarea" 
-                        placeholder="Masukkan Catatan Tambahan"
-                        required
-                    ></textarea>
-                </div>
+            <!-- Jenis Donasi -->
+            <div class="form-group">
+                <label for="donationType" class="form-label">Jenis Donasi <span class="required">*</span></label>
+                <select id="donationType" name="jenis_donasi" class="dropdown" required onchange="toggleOtherField()">
+                    <option value="">Pilih Jenis Donasi</option>
+                    <option value="sembako">Sembako</option>
+                    <option value="pakaian layak pakai">Pakaian Layak Pakai</option>
+                    <option value="perlengkapan bayi">Perlengkapan Bayi</option>
+                    <option value="alat sekolah">Alat Sekolah</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+            </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn">Selesai</button>
-            </form>
-        </div>
+            <!-- Barang Lainnya -->
+            <div class="form-group hidden" id="otherItemGroup">
+                <label for="otherItem" class="form-label">Barang Lainnya <span class="required">*</span></label>
+                <input type="text" id="otherItem" name="jenis_donasi_lainnya" class="form-input" placeholder="Sebutkan barang lainnya">
+            </div>
+
+            <!-- Deskripsi Barang -->
+            <div class="form-group">
+                <label for="itemDescription" class="form-label">Deskripsi Barang <span class="required">*</span></label>
+                <input type="text" id="itemDescription" name="deskripsi_barang" class="form-input" placeholder="Masukkan Jenis Barang" required>
+            </div>
+
+            <!-- Alamat Pengirim -->
+            <div class="form-group">
+                <label for="alamat_pengirim" class="form-label">Alamat Pengirim <span class="required">*</span></label>
+                <textarea id="alamat_pengirim" name="alamat_pengirim" class="form-textarea" placeholder="Masukkan Alamat Lengkap" required></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="submit-btn">Selesai</button>
+        </form>
+    </div>
     </main>
 
     <!-- Footer -->

@@ -2,47 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DonationController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ProgramDonasiController;
+use App\Http\Controllers\DonasiUangController;
+use App\Http\Controllers\DonasiBarangController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
-// Route untuk halaman donasi uang
-Route::get('/donasi-uang', function () {
-    return view('donasiuang');
-})->name('donasi.uang');
+Route::get('/donasi-uang', [DonasiUangController::class, 'create'])->name('donasi.uang');
+Route::post('/donasi-uang', [DonasiUangController::class, 'store'])->name('donasi.uang.store');
 
-// Route untuk halaman donasi barang
-Route::get('/donasi-barang', function () {
-    return view('donasibarang');
-})->name('donasi.barang');
+Route::get('/donasi-barang', [DonasiBarangController::class, 'create'])->name('donasi.barang');
+Route::post('/donasi-barang', [DonasiBarangController::class, 'store'])->name('donasi.barang.store');
 
-Route::get('/invoice-donasi-uang', function () {
-    return view('invoiceuang');
-})->name('invoice.uang');
+Route::get('/donasi-invoice/{id}', [InvoiceController::class, 'show'])->name('donasi.invoice');
+Route::get('/donasi-invoice-barang/{id}', [InvoiceController::class, 'showBarang'])->name('donasi.invoice.barang');
 
-Route::get('/invoice-donasi-barang', function () {
-    return view('invoicebarang');
-})->name('invoice.barang');
-
-// 🔹 Dashboard (Login & Terverifikasi)
-Route::get('/dashboard', function () {
-    $logoUrl = Storage::url('logo.png');
-    return view('dashboard', compact('logoUrl'));
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// 🔹 Donasi (Khusus Pengguna Login)
-    Route::post('/simpan', [DonationController::class, 'store'])->name('donation.store');
-
-
-// 🔹 Profil Pengguna (Login Wajib)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-// 🔹 Otentikasi (Login, Register, Forgot Password, dll)
-require __DIR__ . '/auth.php';
+Route::resource('program', ProgramDonasiController::class);

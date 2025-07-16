@@ -397,53 +397,39 @@
         <div class="programs-container">
             <div class="programs-slider">
                 <!-- Program Cards - Duplicated for infinite loop -->
-                <div class="program-card">
-                    <div class="program-image"></div>
-                    <h3 class="program-title">Donasi Posko Hangat untuk Terdampak Bencana</h3>
-                    <p class="program-description">Bantuan Darurat Pengungsi Bencana (BPDB) mencatat ribuan kejadian bencana di seluruh...</p>
-                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
-                    <p class="program-date">Sampai: 2024-12-15</p>
-                    <div class="program-buttons">
-                        <button class="btn-donasi-uang">Donasi Uang</button>
-                        <button class="btn-donasi-barang">Donasi Barang</button>
-                    </div>
-                </div>
+               @php use Illuminate\Support\Str; @endphp
+                @foreach ($programs as $program)
+                    <div class="program-card">
+                        {{-- Gambar --}}
+                        <div class="program-image">
+                            @if ($program->foto)
+                                <img src="{{ asset('storage/' . $program->foto) }}" alt="{{ $program->nama_program }}" style="width: 100%; height: auto;">
+                            @else
+                                <img src="{{ asset('images/default.jpg') }}" alt="default image" style="width: 100%; height: auto;">
+                            @endif
+                        </div>
 
-                <div class="program-card">
-                    <div class="program-image"></div>
-                    <h3 class="program-title">9.000 Paket Makanan untuk Korban Banjir Gorontalo</h3>
-                    <p class="program-description">Banjir kota Gorontalo telah meluluh lantakkan beberapa kecamatan sejak 7 Juli 2024. BAZNAS Tanggap Bencana...</p>
-                    <p class="program-target">Target Donasi: 9.000 paket makanan</p>
-                    <p class="program-date">Sampai: 2024-12-10</p>
-                    <div class="program-buttons">
-                        <button class="btn-donasi-uang">Donasi Uang</button>
-                        <button class="btn-donasi-barang">Donasi Barang</button>
-                    </div>
-                </div>
+                        {{-- Judul --}}
+                        <h3 class="program-title">{{ $program->nama_program }}</h3>
 
-                <div class="program-card">
-                    <div class="program-image"></div>
-                    <h3 class="program-title">Anak-Anak Membutuhkan Bantuan Anda</h3>
-                    <p class="program-description">Situasi di Jalur Gaza makin memperburuk kondisi anak-anak hingga akhir tahun 2025. Kampanye ini digagas oleh Teman...</p>
-                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
-                    <p class="program-date">Sampai: 2024-12-16</p>
-                    <div class="program-buttons">
-                        <button class="btn-donasi-uang">Donasi Uang</button>
-                        <button class="btn-donasi-barang">Donasi Barang</button>
-                    </div>
-                </div>
+                        {{-- Deskripsi singkat --}}
+                        <p class="program-description">{{ Str::limit($program->deskripsi, 100) }}</p>
 
-                <div class="program-card">
-                    <div class="program-image"></div>
-                    <h3 class="program-title">Indonesia Siap Siaga (Persiapan Bencana Alam)</h3>
-                    <p class="program-description">Dompet Dhuafa Yogyakarta mengajak masyarakat untuk membangun kesadaran bersama menghadapi letusan gunung berapi, dan bencana alam lainnya melalui edukasi dan...</p>
-                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
-                    <p class="program-date">Sampai: 2024-12-10</p>
-                    <div class="program-buttons">
-                        <button class="btn-donasi-uang">Donasi Uang</button>
-                        <button class="btn-donasi-barang">Donasi Barang</button>
+                        {{-- Target dan Tanggal --}}
+                        <p class="program-target">Target Donasi: Rp {{ number_format($program->target_donasi, 0, ',', '.') }}</p>
+                        <p class="program-date">Sampai: {{ \Carbon\Carbon::parse($program->tanggal_selesai)->format('Y-m-d') }}</p>
+
+                        {{-- Tombol --}}
+                        <div class="program-buttons">
+                            <a href="{{ route('donasi.uang', ['program_id' => $program->id]) }}" class="btn-donasi-uang">
+                                Donasi Uang
+                            </a>
+                            <a href="{{ route('donasi.barang', ['program_id' => $program->id]) }}" class="btn-donasi-barang">
+                                Donasi Barang
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endforeach
         </section>
 
     <!-- Footer -->

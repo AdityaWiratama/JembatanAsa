@@ -311,102 +311,108 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="form-container">
-            <h1 class="form-title">Formulir Donasi Uang</h1>
-            <p class="form-subtitle">Silahkan isi semua informasi yang diperlukan dengan akurat</p>
-            
-            <form id="donationForm" onsubmit="handleSubmit(event)">
-                <!-- Nama Lengkap -->
-                <div class="form-group">
-                    <label for="fullName" class="form-label">Nama Lengkap <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="fullName" 
-                        name="fullName" 
-                        class="form-input" 
-                        placeholder="Masukkan Nama Lengkap"
-                        required
-                    >
-                </div>
+         <div class="form-container">
+        <h1 class="form-title">Formulir Donasi Uang</h1>
+        <p class="form-subtitle">Silahkan isi semua informasi yang diperlukan dengan akurat</p>
 
-                <!-- Email/No. WA -->
-                <div class="form-group">
-                    <label for="contact" class="form-label">Email/No. WA <span class="required">*</span></label>
-                    <input 
-                        type="text" 
-                        id="contact" 
-                        name="contact" 
-                        class="form-input" 
-                        placeholder="Masukkan Email/No. WA"
-                        required
-                    >
-                </div>
+        {{-- Notifikasi jika sukses --}}
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                <!-- Donasi Kemana -->
-                <div class="form-group">
-                    <label for="donationTarget" class="form-label">Donasi Kemana <span class="required">*</span></label>
-                    <select id="donationTarget" name="donationTarget" class="dropdown" required>
-                        <option value="">Pilih Program Donasi</option>
-                        <option value="bencana">Donasi Posko Hangat untuk Terdampak Bencana</option>
-                        <option value="makanan-gorontalo">9.000 Paket Makanan untuk Korban Banjir Gorontalo</option>
-                        <option value="anak-gaza">Anak-Anak Membutuhkan Bantuan Anda</option>
-                        <option value="siap-siaga">Indonesia Siap Siaga (Persiapan Bencana Alam)</option>
-                        <option value="pendidikan-yatim">Bantuan Pendidikan Anak Yatim</option>
-                        <option value="wakaf-masjid">Wakaf Pembangunan Masjid</option>
-                        <option value="kesehatan">Program Kesehatan dan Pengobatan</option>
-                        <option value="makanan-harian">Sedekah Makanan Harian</option>
-                    </select>
-                </div>
+        {{-- Form start --}}
+        <form id="donationForm" method="POST" action="{{ route('donasi.uang.store') }}">
+            @csrf
 
-                <!-- Nominal -->
-                <div class="form-group">
-                    <label for="amount" class="form-label">Nominal <span class="required">*</span></label>
-                    <input 
-                        type="number" 
-                        id="amount" 
-                        name="amount" 
-                        class="form-input" 
-                        placeholder="Masukkan Nominal"
-                        min="10000"
-                        required
-                    >
-                </div>
+            <!-- Nama Lengkap -->
+            <div class="form-group">
+                <label for="fullName" class="form-label">Nama Lengkap <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="nama_lengkap" 
+                    class="form-input" 
+                    placeholder="Masukkan Nama Lengkap"
+                    required
+                >
+            </div>
 
-                <!-- Metode Pembayaran -->
-                <div class="form-group">
-                    <label for="paymentMethod" class="form-label">Metode Pembayaran <span class="required">*</span></label>
-                    <select id="paymentMethod" name="paymentMethod" class="dropdown" required>
-                        <option value="">Pilih Metode Pembayaran</option>
-                        <optgroup label="E-Wallet">
-                            <option value="shopeepay">ShopeePay</option>
-                            <option value="dana">DANA</option>
-                            <option value="ovo">OVO</option>
-                        </optgroup>
-                        <optgroup label="Bank Transfer">
-                            <option value="bri">Bank BRI</option>
-                            <option value="bni">Bank BNI</option>
-                            <option value="bca">Bank BCA</option>
-                            <option value="mandiri">Bank Mandiri</option>
-                        </optgroup>
-                    </select>
-                </div>
+            <!-- Email/No. WA -->
+            <div class="form-group">
+                <label for="contact" class="form-label">Email/No. WA <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="contact" 
+                    name="kontak" 
+                    class="form-input" 
+                    placeholder="Masukkan Email/No. WA"
+                    required
+                >
+            </div>
 
-                <!-- Catatan Tambahan -->
-                <div class="form-group">
-                    <label for="notes" class="form-label">Catatan Tambahan <span class="required">*</span></label>
-                    <textarea 
-                        id="notes" 
-                        name="notes" 
-                        class="form-textarea" 
-                        placeholder="Masukkan Catatan Tambahan"
-                        required
-                    ></textarea>
-                </div>
+            <!-- Donasi Kemana -->
+            <div class="form-group">
+                <label for="donationTarget" class="form-label">Donasi Kemana <span class="required">*</span></label>
+                <select id="donationTarget" name="program_donasi_id" class="dropdown" required>
+                    <option value="">Pilih Program Donasi</option>
+                    @foreach ($programs as $program)
+                        <option value="{{ $program->id }}"
+                            {{ (isset($selectedProgramId) && $selectedProgramId == $program->id) ? 'selected' : '' }}>
+                            {{ $program->nama_program }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn">Selesai</button>
-            </form>
-        </div>
+            <!-- Nominal -->
+            <div class="form-group">
+                <label for="amount" class="form-label">Nominal <span class="required">*</span></label>
+                <input 
+                    type="number" 
+                    id="amount" 
+                    name="nominal" 
+                    class="form-input" 
+                    placeholder="Masukkan Nominal"
+                    min="10000"
+                    required
+                >
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div class="form-group">
+                <label for="paymentMethod" class="form-label">Metode Pembayaran <span class="required">*</span></label>
+                <select id="paymentMethod" name="metode_pembayaran" class="dropdown" required>
+                    <option value="">Pilih Metode Pembayaran</option>
+                    <optgroup label="E-Wallet">
+                        <option value="Shopeepay">ShopeePay</option>
+                        <option value="Dana">DANA</option>
+                        <option value="Ovo">OVO</option>
+                    </optgroup>
+                    <optgroup label="Bank Transfer">
+                        <option value="BRI">Bank BRI</option>
+                        <option value="BNI">Bank BNI</option>
+                        <option value="BCA">Bank BCA</option>
+                        <option value="Mandiri">Bank Mandiri</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Catatan Tambahan -->
+            <div class="form-group">
+                <label for="notes" class="form-label">Catatan Tambahan <span class="required">*</span></label>
+                <textarea 
+                    id="notes" 
+                    name="catatan_tambahan" 
+                    class="form-textarea" 
+                    placeholder="Masukkan Catatan Tambahan"
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Selesai</button>
+        </form>
+    </div>
     </main>
 
     <!-- Footer -->
