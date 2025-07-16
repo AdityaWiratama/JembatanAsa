@@ -5,20 +5,27 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DonationController;
 use Illuminate\Support\Facades\Storage;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| Ini adalah definisi semua route utama untuk aplikasi web.
-|
-| Kelompok route berdasarkan fungsinya: landing, dashboard, donasi,
-| profil, dan autentikasi.
-*/
-
-// 🔹 Halaman Landing
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
+
+// Route untuk halaman donasi uang
+Route::get('/donasi-uang', function () {
+    return view('donasiuang');
+})->name('donasi.uang');
+
+// Route untuk halaman donasi barang
+Route::get('/donasi-barang', function () {
+    return view('donasibarang');
+})->name('donasi.barang');
+
+Route::get('/invoice-donasi-uang', function () {
+    return view('invoiceuang');
+})->name('invoice.uang');
+
+Route::get('/invoice-donasi-barang', function () {
+    return view('invoicebarang');
+})->name('invoice.barang');
 
 // 🔹 Dashboard (Login & Terverifikasi)
 Route::get('/dashboard', function () {

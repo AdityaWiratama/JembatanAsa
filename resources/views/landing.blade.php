@@ -1,232 +1,497 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jembatan Asa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jembatan Asa - Berbagi Kebaikan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #57B2F2;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #57B2F2;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            min-height: 500px;
+            background: #f8f9fa;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-highlight {
+            background: #57B2F2;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            color: #57B2F2;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .btn-donasi {
+            background: #FF009D;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-donasi:hover {
+            background: #e6008a;
+        }
+
+        .hero-image {
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 300px;
+            background: #c0c0c0;
+            border-radius: 10px;
+        }
+
+        /* About Section */
+        .about {
+            display: flex;
+            padding: 4rem 2rem;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .about-title {
+            font-size: 2rem;
+            color: #57B2F2;
+            margin-bottom: 1rem;
+        }
+
+        .about-text {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn-selengkapnya {
+            background: #FF009D;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image .placeholder-image {
+            height: 250px;
+        }
+
+        /* Programs Section */
+        .programs {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .programs-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .programs-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .programs-slider {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .program-card {
+            min-width: 280px;
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #57B2F2;
+        }
+
+        .program-image {
+            width: 100%;
+            height: 150px;
+            background: #c0c0c0;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .program-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #57B2F2;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .program-target {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-date {
+            color: #999;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-donasi-uang {
+            flex: 1;
+            background: #FF009D;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-donasi-barang {
+            flex: 1;
+            background: #57B2F2;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #FF009D 0%, #57B2F2 50%, #ffffff 100%);
+            padding: 3rem 2rem 2rem;
+            color: white;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li:before {
+            content: "• ";
+            color: white;
+            margin-right: 0.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-image {
+                margin-left: 0;
+                margin-top: 2rem;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
 </head>
-<body class="font-[Inter] bg-white text-gray-800">
-
-  <!-- Header -->
-<header class="flex items-center justify-between px-6 py-4 shadow-md bg-white">
-  <div class="flex items-center gap-3">
-    <img src="/images/Jembatan_Asa.jpg" alt="Logo" class="h-10 w-auto">
-    <span class="text-xl font-bold text-[#57B2F2]">Jembatan Asa</span>
-  </div>
-  <nav class="flex gap-6 font-medium">
-    <a href="#tentang" class="hover:text-[#57B2F2]">Tentang Kami</a>
-    <a href="#program" class="hover:text-[#57B2F2]">Program Kami</a>
-    <a href="#sosmed" class="hover:text-[#57B2F2]">Media Sosial</a>
-  </nav>
-</header>
-
-  <!-- Hero Section -->
-  <section class="relative bg-white">
-    <div class="relative h-auto md:h-[650px] overflow-hidden rounded-2xl mx-4 my-6 shadow-lg flex flex-col md:flex-row">
-      <div class="w-full md:w-1/2 flex items-center justify-center px-6 md:px-10 py-10 md:py-0 z-10">
-        <div class="max-w-xl">
-          <h1 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-            Berbagi Kebaikan,<br />
-            Wujudkan <span class="text-[#57B2F2]">Harapan</span> Sesama
-          </h1>
-          <p class="mt-4 text-base md:text-lg text-[#57B2F2] font-medium tracking-wide">
-            #MENGALIRKANKEBAIKAN
-          </p>
-          <a href="#donasi"
-            class="mt-6 inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white font-semibold text-lg px-7 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-            ❤️ Donasi Sekarang
-          </a>
-      </div>
-      </div>
-      <div class="relative w-full md:w-1/2 h-[400px] md:h-full overflow-hidden rounded-r-2xl">
-        <img src="{{ asset('images/berbagi beras.jpg') }}" alt="Taman Zakat"
-          class="absolute inset-0 w-full h-full object-cover object-center scale-[1.1] brightness-[1.1] contrast-[1.1] z-0" />
-        <div class="absolute inset-0 z-10 bg-gradient-to-l from-white/70 via-transparent to-transparent"></div>
-        <div class="absolute inset-0 z-20 pointer-events-none rounded-r-2xl"
-          style="background: radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0) 20%, rgba(0,0,0,0.3) 80%);">
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/placeholder.svg?height=40&width=40" alt="Jembatan Asa Logo">
+            <span class="logo-text">JEMBATAN ASA</span>
         </div>
-      </div>
-    </div>
-  </section>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#programs">Program Unggulan</a></li>
+                <li><a href="#about">Tentang Kami</a></li>
+                <li><a href="#social">Media Sosial</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Tentang Kami -->
-  <section class="py-16 bg-gray-50 text-center">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-gray-800 mb-6">Tentang Kami</h2>
-      <p class="text-gray-600 text-lg leading-relaxed">
-        Taman Zakat adalah lembaga pengelola zakat, infak, dan sedekah yang berkomitmen untuk menghadirkan program-program sosial
-        yang bermanfaat bagi masyarakat luas. Dengan semangat #MengalirkanKebaikan, kami terus berupaya menjadi jembatan kebaikan
-        antara para donatur dan penerima manfaat, melalui program-program yang transparan, amanah, dan tepat sasaran.
-      </p>
-      <div class="mt-8 flex justify-center">
-        <a href="#tentang" class="bg-[#57B2F2] hover:bg-blue-500 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-lg">
-          Bergabung Bersama Kami
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Program Unggulan -->
-<section id="program" class="py-16 bg-white text-center">
-  <div class="max-w-6xl mx-auto px-4">
-    <h3 class="text-3xl font-bold text-gray-800 mb-12">Program Unggulan Kami</h3>
-
-    <div class="flex space-x-6 overflow-x-auto pb-4">
-      <!-- CARD TEMPLATE -->
-      <!-- Gunakan ini untuk semua card -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/Program_Palestina.jpg" alt="Program Palestina" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">PROGRAM PALESTINA</h4>
-          <p class="text-gray-700 mb-4">Bantuan kemanusiaan untuk saudara-saudara kita di Palestina yang membutuhkan dukungan dalam situasi krisis.</p>
-          <a href="https://donasi.tamanzakat.org/palestina/" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Berbagi kebaikan,<br>
+                Wujudkan<br>
+                <span class="hero-highlight">Harapan</span> Sesama
+            </h1>
+            <p class="hero-subtitle">#MENGALIRKANKEBAIKAN</p>
+            <button class="btn-donasi">💝 Donasi Sekarang</button>
         </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/Tebar manfaat Qur'an.jpg" alt="Program Sedekah Qur'an" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">TEBAR MANFAAT QURAN</h4>
-          <p class="text-gray-700 mb-4">Mendistribusikan Al-Qur'an ke seluruh penjuru negeri untuk masyarakat yang membutuhkan akses terhadap kitab suci.</p>
-          <a href="https://donasi.tamanzakat.org/campaign/tebar-manfaat-quran" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
+        <div class="hero-image">
+            <div class="placeholder-image"></div>
         </div>
-      </div>
+    </section>
 
-      <!-- Card 3 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/Sumur Bor.jpg" alt="Program Sedekah Sumur Bor" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">PROGRAM SEDEKAH SUMUR BOR</h4>
-          <p class="text-gray-700 mb-4">Membangun sumur bor di daerah kekeringan untuk menyediakan akses air bersih bagi masyarakat yang kesulitan mendapatkan air.</p>
-          <a href="#" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="about-title">Tentang kami</h2>
+            <p class="about-text">
+                Yayasan Taman Zakat Indonesia Berdiri tahun 2018.<br>
+                Taman Zakat merupakan Lembaga Filantropi Profesional dan terpercaya yang berfokus pada Sarana dakwah untuk Pengembangan Alquran, Pendidikan, Kesehatan dan Kemanusiaan.<br><br>
+                Kami Memfasilitasi perkembangan generasi yang penuh berkah dan Kami mempunyai mimpi bisa menjadi salah satu tulang punggung gerakan kebaikan ummat.
+            </p>
+            <button class="btn-selengkapnya">selengkapnya</button>
         </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/sedekah-beras-rakyat.jpg" alt="Sedekah Beras Rakyat" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">SEDEKAH BERAS RAKYAT</h4>
-          <p class="text-gray-700 mb-4">Membagikan beras kepada masyarakat kurang mampu agar mereka bisa mencukupi kebutuhan pangan sehari-hari.</p>
-          <a href="https://donasi.tamanzakat.org/campaign/sedekah-beras" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
+        <div class="about-image">
+            <div class="placeholder-image"></div>
         </div>
-      </div>
+    </section>
 
-      <!-- Card 5 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/beasiswa-bintang.jpg" alt="Beasiswa Bintang" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">BEASISWA BINTANG</h4>
-          <p class="text-gray-700 mb-4">Memberikan bantuan pendidikan bagi anak-anak berprestasi dari keluarga kurang mampu.</p>
-          <a href="https://donasi.tamanzakat.org/campaign/beasiswa-bintang" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
+    <!-- Programs Section -->
+    <section class="programs" id="programs">
+        <h2 class="programs-title">Program kami</h2>
+        <div class="programs-container">
+            <div class="programs-slider">
+                <!-- Program Cards - Duplicated for infinite loop -->
+                <div class="program-card">
+                    <div class="program-image"></div>
+                    <h3 class="program-title">Donasi Posko Hangat untuk Terdampak Bencana</h3>
+                    <p class="program-description">Bantuan Darurat Pengungsi Bencana (BPDB) mencatat ribuan kejadian bencana di seluruh...</p>
+                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
+                    <p class="program-date">Sampai: 2024-12-15</p>
+                    <div class="program-buttons">
+                        <button class="btn-donasi-uang">Donasi Uang</button>
+                        <button class="btn-donasi-barang">Donasi Barang</button>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-image"></div>
+                    <h3 class="program-title">9.000 Paket Makanan untuk Korban Banjir Gorontalo</h3>
+                    <p class="program-description">Banjir kota Gorontalo telah meluluh lantakkan beberapa kecamatan sejak 7 Juli 2024. BAZNAS Tanggap Bencana...</p>
+                    <p class="program-target">Target Donasi: 9.000 paket makanan</p>
+                    <p class="program-date">Sampai: 2024-12-10</p>
+                    <div class="program-buttons">
+                        <button class="btn-donasi-uang">Donasi Uang</button>
+                        <button class="btn-donasi-barang">Donasi Barang</button>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-image"></div>
+                    <h3 class="program-title">Anak-Anak Membutuhkan Bantuan Anda</h3>
+                    <p class="program-description">Situasi di Jalur Gaza makin memperburuk kondisi anak-anak hingga akhir tahun 2025. Kampanye ini digagas oleh Teman...</p>
+                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
+                    <p class="program-date">Sampai: 2024-12-16</p>
+                    <div class="program-buttons">
+                        <button class="btn-donasi-uang">Donasi Uang</button>
+                        <button class="btn-donasi-barang">Donasi Barang</button>
+                    </div>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-image"></div>
+                    <h3 class="program-title">Indonesia Siap Siaga (Persiapan Bencana Alam)</h3>
+                    <p class="program-description">Dompet Dhuafa Yogyakarta mengajak masyarakat untuk membangun kesadaran bersama menghadapi letusan gunung berapi, dan bencana alam lainnya melalui edukasi dan...</p>
+                    <p class="program-target">Target Donasi: Rp 50.000.000</p>
+                    <p class="program-date">Sampai: 2024-12-10</p>
+                    <div class="program-buttons">
+                        <button class="btn-donasi-uang">Donasi Uang</button>
+                        <button class="btn-donasi-barang">Donasi Barang</button>
+                    </div>
+                </div>
+        </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="social">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo" style="margin-bottom: 1rem;">
+                    <img src="/placeholder.svg?height=40&width=40" alt="Jembatan Asa Logo">
+                    <span class="logo-text">JEMBATAN ASA</span>
+                </div>
+                <h3>Yayasan Donasi Kemanusiaan</h3>
+                <p>Lembaga Filantropi Profesional dan terpercaya yang berfokus pada Sarana dakwah untuk Pengembangan Alquran, Pendidikan, Kesehatan dan Kemanusiaan.</p>
+                
+                <h3 style="margin-top: 2rem;">Program Unggulan</h3>
+                <ul>
+                    <li>Donasi Bencana Alam</li>
+                    <li>Bantuan Pendidikan Anak Yatim</li>
+                    <li>Kesehatan dan Pengobatan</li>
+                    <li>Sedekah Makanan Harian</li>
+                    <li>Wakaf Pembangunan Masjid</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Informasi Kami</h3>
+                <ul>
+                    <li>Profil Lembaga</li>
+                    <li>Berita</li>
+                    <li>Artikel</li>
+                    <li>Mitra Korporat</li>
+                    <li>Download</li>
+                    <li>Login Donatur</li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">Kantor Pusat</h3>
+                <p>Jl.GARASI, BLOK 07, No.207</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Ikuti Kami di</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">🎵</a>
+                    <a href="#" class="social-icon">▶</a>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden text-left min-w-[300px]">
-        <img src="/images/Layanan Ambulance.jpg" alt="Layanan Ambulance Gratis" class="w-full h-52 object-cover">
-        <div class="p-6">
-          <h4 class="text-xl font-semibold text-[#57B2F2] mb-2">LAYANAN AMBULANCE GRATIS</h4>
-          <p class="text-gray-700 mb-4">Memberikan layanan ambulance gratis untuk membantu masyarakat dalam keadaan darurat medis.</p>
-          <a href="https://donasi.tamanzakat.org/campaign/layanan-ambulance-gratis" class="inline-block px-4 py-2 bg-[#DA336B] text-white font-semibold rounded hover:bg-[#c12d5f] transition">Kunjungi</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-  <!-- Formulir Donasi -->
-  <section id="daftar" class="bg-gray-100 py-12 px-6">
-    <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow">
-      <h3 class="text-xl font-bold mb-4 text-center">Formulir Zakat</h3>
-      <p class="text-center mb-6">Silakan isi semua informasi yang diperlukan dengan akurat</p>
-      <form action="{{ route('donation.store') }}" method="POST">
-        @csrf
-        <label class="block mb-4">
-          <span class="block mb-1">Nama Lengkap *</span>
-          <input type="text" class="w-full border border-gray-300 rounded px-4 py-2" required name="nama" placeholder="nama lengkap">
-        </label>
-        <label class="block mb-4">
-          <span class="block mb-1">Nomor Telepon *</span>
-          <input type="tel" class="w-full border border-gray-300 rounded px-4 py-2" required name="telepon" placeholder="nomor telepon">
-        </label>
-        <label class="block mb-6">
-          <span class="block mb-1">Alamat domisili</span>
-          <textarea class="w-full border border-gray-300 rounded px-4 py-2" required name="alamat" placeholder="Masukkan alamat lengkap"></textarea>
-        </label>
-        <a href="https://wa.me/6282230099009">
-          <button class="bg-[#DA336B] text-white px-8 py-3 text-lg rounded hover:bg-[#c12d5f]">Kirim</button>
-        </a>
-      </form>
-    </div>
-  </section>
-
- <!-- Section Sosial Media -->
-<section class="py-16 px-4 bg-white text-center" id="sosmed">
-  <h2 class="text-2xl md:text-3xl font-bold mb-10 text-gray-800">Kunjungi Kami Di</h2>
-
-  <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10">
-
-    <!-- Instagram -->
-    <a href="https://instagram.com/tamanzakat" target="_blank"
-       class="bg-gray-200 rounded-xl p-6 w-56 flex flex-col items-center shadow hover:scale-105 transition">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-           alt="Instagram" class="w-10 h-10 mb-3">
-      <span class="font-semibold text-sm text-gray-800">@tamanzakat</span>
-    </a>
-
-    <!-- YouTube -->
-    <a href="https://youtube.com/@tamanzakat" target="_blank"
-       class="bg-gray-200 rounded-xl p-6 w-56 flex flex-col items-center shadow hover:scale-105 transition">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
-           alt="YouTube" class="w-10 h-10 mb-3">
-      <span class="font-semibold text-sm text-gray-800">TAMAN ZAKAT</span>
-    </a>
-
-    <!-- TikTok -->
-    <a href="https://tiktok.com/@taman.zakat" target="_blank"
-       class="bg-gray-200 rounded-xl p-6 w-56 flex flex-col items-center shadow hover:scale-105 transition">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"
-           alt="TikTok" class="w-10 h-10 mb-3">
-      <span class="font-semibold text-sm text-gray-800">@taman.zakat</span>
-    </a>
-
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-[#57B2F2] text-white py-10 px-6">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-    <!-- Kontak -->
-    <div>
-      <h4 class="text-lg font-semibold mb-4">Contact</h4>
-      <ul class="space-y-2 text-sm">
-        <li class="flex items-start gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C8 2 5 5 5 9c0 3.74 4.4 8.14 6.6 10.28.76.74 1.64.74 2.4 0C14.6 17.14 19 12.74 19 9c0-4-3-7-7-7z"/>
-          </svg>
-          <span>Jl. Wisma Trosobo IV No. 33 Trosobo, Taman, Sidoarjo</span>
-        </li>
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M16 12H8m0 0l4 4m-4-4l4-4m8 4a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>mail@tamanzakat.org</span>
-        </li>
-        <li class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path d="M3 5a2 2 0 012-2h3.28a2 2 0 011.94 1.45l.516 2.06a2 2 0 01-.416 1.855L8.83 11.17a11.042 11.042 0 005.01 5.01l2.81-2.81a2 2 0 011.856-.416l2.06.516a2 2 0 011.45 1.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-          <span>082230099009</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Copyright -->
-  <div class="mt-8 border-t border-white/30 pt-4 text-center text-sm">
-    &copy; 2024 Portal Zakat. Semua hak dilindungi. | Dibuat dengan <span class="text-red-400">💖</span> untuk Umat
-  </div>
-</footer>
+    </footer>
+</body>
+</html>
