@@ -7,6 +7,7 @@ use App\Http\Controllers\ProgramDonasiController;
 use App\Http\Controllers\DonasiUangController;
 use App\Http\Controllers\DonasiBarangController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\BeritaController;
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -20,4 +21,5 @@ Route::post('/donasi-barang', [DonasiBarangController::class, 'store'])->name('d
 Route::get('/donasi-invoice/{id}', [InvoiceController::class, 'show'])->name('donasi.invoice');
 Route::get('/donasi-invoice-barang/{id}', [InvoiceController::class, 'showBarang'])->name('donasi.invoice.barang');
 
+Route::resource('berita', BeritaController::class);
 Route::resource('program', ProgramDonasiController::class);

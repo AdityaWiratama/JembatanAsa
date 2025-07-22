@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Donasi Barang - Jembatan Asa</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
@@ -260,14 +261,12 @@
     <!-- Header -->
     <header class="header">
         <div class="logo">
-            <img src="/placeholder.svg?height=40&width=40" alt="Jembatan Asa Logo">
+                <img src="{{asset('images/Jembatan_Asa.jpg')}}" alt="Jembatan Asa Logo">
             <span class="logo-text">JEMBATAN ASA</span>
         </div>
         <nav>
             <ul class="nav-menu">
-                <li><a href="#programs">Program Unggulan</a></li>
-                <li><a href="#about">Tentang Kami</a></li>
-                <li><a href="#social">Media Sosial</a></li>
+                <li><a href="{{ route('landing') }}">Kembali</a></li>
             </ul>
         </nav>
     </header>
